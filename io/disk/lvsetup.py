@@ -61,23 +61,22 @@ class Lvsetup(Test):
         self.fs_name = self.params.get('fs', default='ext4').lower()
         self.lv_size = self.params.get('lv_size', default='0')
         self.d_distro = distro.detect()
-        distro_name = self.d_distro.name
         if self.fs_name == 'xfs':
             pkgs = ['xfsprogs']
         if self.fs_name == 'btrfs':
-            if distro_name == 'Ubuntu':
+            if self.d_distro.name == 'Ubuntu':
                 ver = int(self.d_distro.version.split('.')[0])
             else:
                 ver = int(self.d_distro.version)
             rel = int(self.d_distro.release)
-            if distro_name == 'rhel':
+            if self.d_distro.name == 'rhel':
                 if (ver == 7 and rel >= 4) or ver > 7:
                     self.cancel("btrfs is not supported with RHEL 7.4 onwards")
-            if distro_name == 'SuSE':
+            if self.d_distro.name == 'SuSE':
                 pkgs = ['btrfsprogs']
             else:
                 pkgs = ['btrfs-progs']
-        if distro_name in ['Ubuntu', 'debian']:
+        if self.d_distro.name in ['Ubuntu', 'debian']:
             pkgs.extend(['lvm2'])
 
         for pkg in pkgs:
