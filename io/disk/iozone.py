@@ -447,10 +447,10 @@ class IOZone(Test):
                     self.cancel("btrfs is not supported with \
                                 RHEL 7.4 onwards")
                 if self.d_distro.name == 'Ubuntu':
-                    if not smm.check_installed("btrfs-tools") and not \
-                            smm.install("btrfs-tools"):
+                    if not smm.check_installed("btrfs-progs") and not \
+                            smm.install("btrfs-progs"):
                         self.cancel(
-                            'btrfs-tools is needed for the test to be run')
+                            'btrfs-progs is needed for the test to be run')
 
         tarball = self.fetch_asset(self.source_url)
         archive.extract(tarball, self.teststmpdir)
